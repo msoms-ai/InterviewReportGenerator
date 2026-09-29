@@ -148,23 +148,65 @@ export default function Wizard() {
     }
   };
 
+  const startNewInterview = () => {
+    const currentValues = form.getValues();
+    form.reset({
+      interviewerName: currentValues.interviewerName,
+      empNumber: currentValues.empNumber,
+      title: currentValues.title,
+      departmentJob: currentValues.departmentJob,
+      applicantName: "",
+      nationality: "",
+      dateOfBirth: "",
+      maritalStatus: "",
+      qualification: "",
+      mostRecentJob: "",
+      yearsOfExperience: "",
+      relativesInEtisalat: false,
+      relativeDetails: "",
+      appearanceConfidence: "",
+      planningExecution: "",
+      interpersonalSkills: "",
+      customerCentricity: "",
+      collaboration: "",
+      agility: "",
+      empowerment: "",
+      relevantExperience: "",
+      overallRating: "",
+      professionalComments: "",
+      personalityComments: "",
+      eligibilityForEmp: false,
+      jobRecommendedFor: "",
+      grade: "",
+      workLocation: "",
+      availableToJoinFrom: "",
+      otherComments: "",
+      signatureData: "",
+      outputFormat: "docx",
+    });
+    setCurrentStep(0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const progress = ((currentStep + 1) / totalSteps) * 100;
 
   return (
-    <div className="max-w-3xl mx-auto py-8">
-      <div className="mb-8">
-        <div className="flex justify-between text-sm text-slate-500 mb-2">
-          <span>Step {currentStep + 1} of {totalSteps}</span>
-          <span>{Math.round(progress)}% Completed</span>
+    <div className="max-w-4xl mx-auto py-4">
+      <div className="mb-10">
+        <div className="flex justify-between items-end mb-2">
+          <div>
+            <h2 className="text-sm font-bold text-blue-600 uppercase tracking-wider">Step {currentStep + 1} of {totalSteps}</h2>
+            <p className="text-slate-500 text-sm mt-1">{Math.round(progress)}% Completed</p>
+          </div>
         </div>
-        <Progress value={progress} className="h-2" />
+        <Progress value={progress} className="h-2.5 bg-slate-200" />
       </div>
 
-      <Card className="shadow-lg border-slate-200">
+      <Card className="shadow-xl border-slate-200/60 rounded-xl overflow-hidden bg-white">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <CardHeader>
-              <CardTitle className="text-2xl">
+            <div className="bg-slate-50/50 border-b px-8 py-6">
+              <CardTitle className="text-2xl font-bold text-slate-800">
                 {currentStep === 0 && "Context & Interviewer Details"}
                 {currentStep === 1 && "Candidate Information"}
                 {currentStep === 2 && "Experience & Qualifications"}
@@ -172,11 +214,11 @@ export default function Wizard() {
                 {currentStep === 4 && "Assessment & Recommendation"}
                 {currentStep === 5 && "Review & Generate"}
               </CardTitle>
-              <CardDescription>
-                Please fill in the required information.
+              <CardDescription className="text-slate-500 mt-1">
+                Please fill in the required information below to proceed.
               </CardDescription>
-            </CardHeader>
-            <CardContent className="min-h-[300px]">
+            </div>
+            <CardContent className="min-h-[350px] p-8">
                {currentStep === 0 && <Step1 />}
                {currentStep === 1 && <Step2 />}
                {currentStep === 2 && <Step3 />}
@@ -184,24 +226,30 @@ export default function Wizard() {
                {currentStep === 4 && <Step5 />}
                {currentStep === 5 && <Step6 />}
             </CardContent>
-            <CardFooter className="flex justify-between border-t p-6">
+            <CardFooter className="flex justify-between border-t bg-slate-50/30 p-6 px-8">
               <Button 
                 type="button" 
                 variant="outline" 
                 onClick={prevStep}
                 disabled={currentStep === 0}
+                className="w-32 border-slate-300"
               >
                 Previous
               </Button>
               
               {currentStep < totalSteps - 1 ? (
-                <Button type="button" onClick={nextStep} className="bg-green-600 hover:bg-green-700 text-white">
+                <Button type="button" onClick={nextStep} className="w-32 bg-blue-600 hover:bg-blue-700 text-white shadow-md">
                   Next
                 </Button>
               ) : (
-                <Button type="submit" className="bg-green-600 hover:bg-green-700 text-white">
-                  Generate Report
-                </Button>
+                <div className="flex gap-4">
+                  <Button type="button" onClick={startNewInterview} variant="outline" className="border-blue-200 text-blue-700 hover:bg-blue-50">
+                    Start New Interview
+                  </Button>
+                  <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white shadow-md px-6">
+                    Generate Report
+                  </Button>
+                </div>
               )}
             </CardFooter>
           </form>

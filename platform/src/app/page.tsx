@@ -2,10 +2,14 @@ import Wizard from "@/components/Wizard";
 
 export default function Home() {
   return (
-    <div className="w-full">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900">New Interview Report</h1>
-        <p className="text-slate-500 mt-2">Complete the steps below to generate the standardized evaluation document.</p>
+    <div className="w-full max-w-5xl mx-auto py-6">
+      <div className="mb-8 text-center sm:text-left">
+        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+          Interview Report Generator
+        </h1>
+        <p className="text-slate-500 mt-3 text-lg">
+          Complete the guided steps below to dynamically generate a perfectly formatted corporate document.
+        </p>
       </div>
       <Wizard />
     </div>
