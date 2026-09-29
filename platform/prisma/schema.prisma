@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model InterviewRecord {
+  id                    String   @id @default(cuid())
+  createdAt             DateTime @default(now())
+  
+  // Step 1: Context & Interviewer Details
+  interviewerName       String
+  empNumber             String
+  title                 String
+  interviewDate         DateTime
+  departmentJob         String
+  
+  // Step 2: Candidate Information
+  applicantName         String
+  nationality           String
+  dateOfBirth           DateTime
+  maritalStatus         String
+  
+  // Step 3: Experience & Qualifications
+  qualification         String
+  mostRecentJob         String
+  yearsOfExperience     Int
+  relativesInEtisalat   Boolean
+  relativeDetails       String?
+  
+  // Step 4: Competency Ratings
+  appearanceConfidence  String
+  planningExecution     String
+  interpersonalSkills   String
+  customerCentricity    String
+  collaboration         String
+  agility               String
+  empowerment           String
+  relevantExperience    String
+  
+  // Step 5: Assessment & Recommendation
+  overallRating         String
+  professionalComments  String
+  personalityComments   String
+  eligibilityForEmp     Boolean
+  jobRecommendedFor     String
+  grade                 String
+  workLocation          String
+  availableToJoinFrom   DateTime
+  otherComments         String?
+  signatureImage        String? // Base64 or URL
+}
