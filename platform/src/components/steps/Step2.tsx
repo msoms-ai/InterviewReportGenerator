@@ -38,12 +38,17 @@ export default function Step2() {
                 </FormControl>
                 <SelectContent>
                   <SelectItem value="United Arab Emirates">United Arab Emirates</SelectItem>
+                  <SelectItem value="GCC countries">GCC countries</SelectItem>
                   <SelectItem value="United States">United States</SelectItem>
                   <SelectItem value="United Kingdom">United Kingdom</SelectItem>
                   <SelectItem value="India">India</SelectItem>
+                  <SelectItem value="Pakistan">Pakistan</SelectItem>
                   <SelectItem value="Philippines">Philippines</SelectItem>
                   <SelectItem value="Egypt">Egypt</SelectItem>
                   <SelectItem value="Jordan">Jordan</SelectItem>
+                  <SelectItem value="Syria">Syria</SelectItem>
+                  <SelectItem value="Iraq">Iraq</SelectItem>
+                  <SelectItem value="Sri Lanka">Sri Lanka</SelectItem>
                   <SelectItem value="Other">Other</SelectItem>
                 </SelectContent>
               </Select>

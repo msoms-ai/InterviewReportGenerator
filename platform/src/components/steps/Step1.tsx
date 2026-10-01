@@ -68,6 +68,11 @@ export default function Step1() {
                   <SelectItem value="Product Management">Product Management</SelectItem>
                   <SelectItem value="Human Resources">Human Resources</SelectItem>
                   <SelectItem value="Sales & Marketing">Sales & Marketing</SelectItem>
+                  <SelectItem value="Platforms Architecture">Platforms Architecture</SelectItem>
+                  <SelectItem value="Platforms Development">Platforms Development</SelectItem>
+                  <SelectItem value="Platforms Onboarding">Platforms Onboarding</SelectItem>
+                  <SelectItem value="Platforms Operations">Platforms Operations</SelectItem>
+                  <SelectItem value="Platforms Business">Platforms Business</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />

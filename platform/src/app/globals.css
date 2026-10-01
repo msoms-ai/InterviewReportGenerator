@@ -123,6 +123,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: Tahoma, Geneva, sans-serif !important;
   }
   html {
     @apply font-sans;
