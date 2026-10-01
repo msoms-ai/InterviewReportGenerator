@@ -108,14 +108,17 @@ export async function POST(req: NextRequest) {
         personalityComments: data.personalityComments || "",
         otherComments: data.otherComments || "",
         
-        relativesInEtisalat: data.relativesInEtisalat ? "Yes" : "No",
+        rel_yes: data.relativesInEtisalat ? "X" : "",
+        rel_no: !data.relativesInEtisalat ? "X" : "",
         relativeDetails: data.relativeDetails || "",
 
         interviewerName: data.interviewerName || "",
         empNumber: data.empNumber || "",
         title: data.title || "",
         jobRecommendedFor: data.jobRecommendedFor || "",
-        eligibilityForEmp: data.eligibilityForEmp ? "Yes" : "No",
+        
+        elig_yes: data.eligibilityForEmp ? "X" : "",
+        elig_no: !data.eligibilityForEmp ? "X" : "",
 
         grade: data.grade || "",
         workLocation: data.workLocation || "",

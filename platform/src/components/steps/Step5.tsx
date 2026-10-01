@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import SignatureCanvas from "react-signature-canvas";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription } from "@/components/ui/form";
@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button";
 export default function Step5() {
   const { control, setValue } = useFormContext();
   const sigCanvas = useRef<SignatureCanvas>(null);
+  const signatureData = useWatch({ name: "signatureData", control });
+  const [isUploadMode, setIsUploadMode] = useState(false);
 
   const clearSignature = () => {
     sigCanvas.current?.clear();
@@ -181,22 +183,85 @@ export default function Step5() {
       <div className="space-y-4 pt-6 border-t">
         <div>
           <h4 className="text-base font-semibold">Interviewer Signature</h4>
-          <p className="text-sm text-muted-foreground">Please sign below to authorize this feedback report.</p>
+          <p className="text-sm text-muted-foreground">Please provide your signature to authorize this feedback report.</p>
         </div>
-        <div className="border-2 border-dashed border-slate-300 rounded-md bg-white overflow-hidden max-w-[400px]">
-          <SignatureCanvas
-            ref={sigCanvas}
-            canvasProps={{
-              width: 400,
-              height: 150,
-              className: "signature-canvas w-full h-full cursor-crosshair"
-            }}
-            onEnd={saveSignature}
-          />
+        
+        <div className="border border-slate-200 rounded-md p-4 bg-slate-50 space-y-4">
+          <div className="flex items-center gap-4 border-b pb-4">
+            <Button 
+              type="button" 
+              variant={!isUploadMode ? "default" : "outline"} 
+              onClick={() => setIsUploadMode(false)}
+              size="sm"
+            >
+              Draw Signature
+            </Button>
+            <span className="text-slate-400 text-sm">OR</span>
+            <Button 
+              type="button" 
+              variant={isUploadMode ? "default" : "outline"} 
+              onClick={() => setIsUploadMode(true)}
+              size="sm"
+            >
+              Upload Image
+            </Button>
+          </div>
+
+          {!isUploadMode ? (
+            <div className="space-y-2">
+              <div className="border-2 border-dashed border-slate-300 rounded-md bg-white overflow-hidden max-w-[400px]">
+                <SignatureCanvas
+                  ref={sigCanvas}
+                  canvasProps={{
+                    width: 400,
+                    height: 150,
+                    className: "signature-canvas w-full h-full cursor-crosshair"
+                  }}
+                  onEnd={saveSignature}
+                />
+              </div>
+              <Button type="button" variant="outline" size="sm" onClick={clearSignature}>
+                Clear Drawing
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <div className="relative">
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        setValue("signatureData", reader.result as string);
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                />
+                <Button type="button" variant="outline" size="sm">
+                  Choose Image File...
+                </Button>
+              </div>
+              
+              {signatureData?.startsWith("data:image") && signatureData.length > 0 && (
+                <div className="space-y-2">
+                  <div className="border border-slate-300 bg-white rounded-md p-2 inline-block">
+                    <img src={signatureData} alt="Uploaded Signature" className="max-w-[400px] max-h-[150px] object-contain" />
+                  </div>
+                  <div>
+                    <Button type="button" variant="outline" size="sm" onClick={() => setValue("signatureData", "")} className="text-red-600">
+                      Remove Signature
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
-        <Button type="button" variant="outline" size="sm" onClick={clearSignature}>
-          Clear Signature
-        </Button>
       </div>
 
     </div>

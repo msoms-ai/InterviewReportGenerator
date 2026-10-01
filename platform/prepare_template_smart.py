@@ -142,15 +142,23 @@ for table in doc.tables:
                     r3.font.color.rgb = RGBColor(0, 0, 255)
                     
             # Eligibility and Job Recommended For
-            if "Eligibility for Employment" in text and "+++eligibilityForEmp+++" not in cell.text:
-                append_styled_tag(cell, "+++eligibilityForEmp+++")
-                
+            if "Eligibility for Employment" in text:
+                if len(row.cells) >= 6:
+                    if "+++elig_yes+++" not in row.cells[3].text:
+                        set_styled_tag(row.cells[3], "YES\n+++elig_yes+++")
+                    if "+++elig_no+++" not in row.cells[5].text:
+                        set_styled_tag(row.cells[5], "NO\n+++elig_no+++")
+                        
             if "Job Recommended for" in text and "+++jobRecommendedFor+++" not in cell.text:
                 # Add it at the bottom of THIS cell
                 append_styled_tag(cell, "+++jobRecommendedFor+++")
                 
-            if "Any Relatives working in Etisalat" in text and "+++relativesInEtisalat+++" not in cell.text:
-                append_styled_tag(cell, "+++relativesInEtisalat+++")
+            if "Any Relatives working in Etisalat" in text:
+                if len(row.cells) >= 6:
+                    if "+++rel_yes+++" not in row.cells[3].text:
+                        set_styled_tag(row.cells[3], "YES\n+++rel_yes+++")
+                    if "+++rel_no+++" not in row.cells[5].text:
+                        set_styled_tag(row.cells[5], "NO\n+++rel_no+++")
                 
             if "If yes, then details of the relative" in text and "+++relativeDetails+++" not in cell.text:
                 append_styled_tag(cell, "+++relativeDetails+++")
