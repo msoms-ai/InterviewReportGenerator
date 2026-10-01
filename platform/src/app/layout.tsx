@@ -28,11 +28,8 @@ export default function RootLayout({
         <header className="w-full border-b bg-white">
           <div className="container mx-auto px-4 h-16 flex items-center justify-between">
             {/* Whitelabel Logo Placeholder */}
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 bg-green-600 rounded-md flex items-center justify-center text-white font-bold">
-                IF
-              </div>
-              <span className="font-semibold text-lg tracking-tight">Interview Feedback</span>
+            <div className="flex items-center">
+              <img src="/logo.jpg" alt="Interview Report Generator Logo" className="h-10 w-auto object-contain" />
             </div>
             <div className="text-sm text-slate-500">Internal Use Only</div>
           </div>
