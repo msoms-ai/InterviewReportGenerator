@@ -181,7 +181,7 @@ export default function Wizard() {
       workLocation: "",
       availableToJoinFrom: "",
       otherComments: "",
-      signatureData: "",
+      signatureData: currentValues.signatureData,
       outputFormat: "docx",
     });
     setCurrentStep(0);
