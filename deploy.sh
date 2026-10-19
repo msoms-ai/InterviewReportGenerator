@@ -5,23 +5,39 @@ echo "========================================="
 echo "   Plesk Automated Deployment Triggered  "
 echo "========================================="
 
-# Navigate to application directory
+# 1. Locate Node and NPM in Plesk's environment
+if ! command -v npm >/dev/null 2>&1; then
+  echo "npm not in default PATH. Searching Plesk Node.js installations..."
+  for pdir in $(ls -d /opt/plesk/node/*/bin 2>/dev/null | sort -V -r) /usr/local/bin /usr/bin; do
+    if [ -x "$pdir/npm" ] && [ -x "$pdir/node" ]; then
+      export PATH="$pdir:$PATH"
+      echo "Using Node & NPM from: $pdir"
+      break
+    fi
+  done
+fi
+
+if ! command -v npm >/dev/null 2>&1; then
+  echo "ERROR: Could not find npm. Available PATH: $PATH"
+  exit 1
+fi
+
+echo "Node version: $(node -v)"
+echo "NPM version:  $(npm -v)"
+
+# 2. Navigate to application directory
 if [ -d "platform" ]; then
   cd platform
 fi
 
-echo "Current Directory: $(pwd)"
+echo "Working directory: $(pwd)"
 
-# Ensure all dependencies are in sync
-echo "Step 1: Installing dependencies..."
-npm install
-
-# Run database sync and production Next.js build
-echo "Step 2: Building application & updating database schema..."
+# 3. Ensure Prisma and Next build are executed
+echo "Running plesk-deploy (Prisma & Next.js build)..."
 npm run plesk-deploy
 
-# Restart Node.js Phusion Passenger process automatically
-echo "Step 3: Restarting Node.js application..."
+# 4. Restart Phusion Passenger automatically
+echo "Restarting Node.js application..."
 mkdir -p tmp
 touch tmp/restart.txt
 
