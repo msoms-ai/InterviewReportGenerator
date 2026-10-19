@@ -1,5 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export async function GET() {
+  const hasKey = !!(
+    process.env.GEMINI_API_KEY ||
+    process.env.GOOGLE_API_KEY ||
+    process.env.GOOGLE_GENAI_API_KEY ||
+    process.env.GEMINI_KEY ||
+    process.env.GEMINI_API
+  );
+
+  return NextResponse.json({
+    status: "online",
+    geminiConfigured: hasKey,
+    timestamp: new Date().toISOString(),
+  });
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -9,7 +25,9 @@ export async function POST(req: NextRequest) {
       clientApiKey ||
       process.env.GEMINI_API_KEY ||
       process.env.GOOGLE_API_KEY ||
-      process.env.GOOGLE_GENAI_API_KEY;
+      process.env.GOOGLE_GENAI_API_KEY ||
+      process.env.GEMINI_KEY ||
+      process.env.GEMINI_API;
 
     if (!apiKey) {
       return NextResponse.json(
