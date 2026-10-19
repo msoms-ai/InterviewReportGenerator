@@ -111,7 +111,7 @@ Interviewer's Draft Notes:
             ],
             generationConfig: {
               temperature: 0.6,
-              maxOutputTokens: 1000,
+              maxOutputTokens: 2500,
             },
           }),
           signal: controller.signal,
